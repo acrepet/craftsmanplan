@@ -1,0 +1,10 @@
+  // 1er feature : Ajouter prise rendez-vous : possible ou non -> Ajouter une User Story en en-tête des deux fichiers
+  // 2ieme feature : afficher planning de la semaine ou de la journée
+  // ajouter des règles de gestion :
+  // pas plus de xxx kms dans la semaine
+  // pas commencer plus tôt que 8H du mat'
+  // pas plus de 7 rendez-vous dans la journée
+  // pas de rendez-vous dans les ponts
+  // pas plus de 20 jours travaillés dans le mois
+  // collision calendrier perso
+  // 3ième feature : chaque fin de mois retrouver toutes les interventions pour chaque client
