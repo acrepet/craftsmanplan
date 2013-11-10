@@ -6,7 +6,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
 
-import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -40,7 +39,8 @@ public class ScheduleStepdefs {
     public static class AppointmentItem {
         private String city;
         private String customer;
-        private Date beginning;
+        private String datebeginning;
+        private String timebeginning;
 
         public String getCity() {
             return city;
@@ -58,15 +58,24 @@ public class ScheduleStepdefs {
             this.customer = customer;
         }
 
-        public Date getBeginning() {
-            return beginning;
-        }
-        public DateTime getBeginningDT() {
-            return new DateTime(beginning);
+        public String getDatebeginning() {
+            return datebeginning;
         }
 
-        public void setBeginning(Date beginning) {
-            this.beginning = beginning;
+        public void setDatebeginning(String datebeginning) {
+            this.datebeginning = datebeginning;
+        }
+
+        public DateTime getBeginningDT() {
+            return new DateTime(datebeginning);
+        }
+
+        public String getTimebeginning() {
+            return timebeginning;
+        }
+
+        public void setTimebeginning(String timebeginning) {
+            this.timebeginning = timebeginning;
         }
     }
 }
