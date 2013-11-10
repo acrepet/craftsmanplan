@@ -17,7 +17,8 @@ public class ScheduleStepdefs {
     @Given("^an appointments list:$")
     public void an_appointments_list(List<AppointmentItem> items) throws Throwable {
         for (AppointmentItem item : items) {
-            Appointment app = new Appointment(item.getCity(),item.getCustomer(), item.getBeginningDT());
+            DateTime beginning  = new DateTime(item.getDatebeginning());
+            Appointment app = new Appointment(item.getCity(),item.getCustomer(), beginning);
             schedule.addAppointment(app);
         }
     }
@@ -40,7 +41,7 @@ public class ScheduleStepdefs {
         private String city;
         private String customer;
         private String datebeginning;
-        private String timebeginning;
+
 
         public String getCity() {
             return city;
@@ -66,16 +67,6 @@ public class ScheduleStepdefs {
             this.datebeginning = datebeginning;
         }
 
-        public DateTime getBeginningDT() {
-            return new DateTime(datebeginning);
-        }
 
-        public String getTimebeginning() {
-            return timebeginning;
-        }
-
-        public void setTimebeginning(String timebeginning) {
-            this.timebeginning = timebeginning;
-        }
     }
 }

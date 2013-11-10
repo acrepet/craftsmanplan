@@ -56,7 +56,7 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return customer + " " + city;
+        return customer + " " + city + " " + beginning;
     }
 
     public String getCity() {
