@@ -6,14 +6,14 @@ Feature: Craftsman Plan
 
     Given an appointments list:
       | city          | customer       |    datebeginning                         |
-      | Montagny      | albert         |    2013-10-28T16:08:13.324+01:00         |
-      | Craponne      | joe            |    2013-10-28T16:10:13.324+01:00         |
-      | St-Etienne    | besson         |    2013-10-28T16:14:13.324+01:00         |
+      | Montagny      | albert         |    2013-10-28T08:00:00.000+01:00         |
+      | Craponne      | joe            |    2013-10-28T10:00:00.000+01:00         |
+      | St-Etienne    | besson         |    2013-10-28T14:00:00.000+01:00         |
     When I print that list
     Then it should look like:
       """
-      albert Montagny 2013-10-28T16:08:13.324+01:00
-      joe Craponne 2013-10-28T16:10:13.324+01:00
-      besson St-Etienne 2013-10-28T16:14:13.324+01:00
+      albert Montagny 2013-10-28T08:00:00.000+01:00
+      joe Craponne 2013-10-28T10:00:00.000+01:00
+      besson St-Etienne 2013-10-28T14:00:00.000+01:00
 
       """
