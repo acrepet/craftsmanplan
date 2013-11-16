@@ -57,7 +57,7 @@ public class ScheduleService {
     public StringBuilder print() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         for (Appointment appointment : schedule) {
-            stringBuilder.append(appointment.toString()).append("\n");
+            stringBuilder.append(appointment.toString()).append(System.getProperty("line.separator"));
         }
         return stringBuilder;
     }
