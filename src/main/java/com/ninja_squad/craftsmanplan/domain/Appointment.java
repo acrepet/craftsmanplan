@@ -12,16 +12,16 @@ import org.joda.time.Duration;
 public class Appointment {
     private DateTime beginning;
     private DateTime end;
-    private Duration travelDuration;
+    private Duration travelduration;
     private String city;
     private String customer;
 
-    public Appointment(String city, Duration travelDuration, String customer, DateTime end, DateTime beginning) {
+    public Appointment(String city, Duration travelDuration, String customer, DateTime beginning, DateTime end) {
         this.city = city;
-        this.travelDuration = travelDuration;
+        this.travelduration = travelDuration;
         this.customer = customer;
-        this.end = end;
         this.beginning = beginning;
+        this.end = end;
     }
 
     public Appointment(String city, String customer, DateTime beginning) {
@@ -33,6 +33,9 @@ public class Appointment {
     public DateTime getBeginning() {
         return beginning;
     }
+    public DateTime getRealBeginning() {
+        return beginning.minus(getTravelduration());
+    }
 
     public void setBeginning(DateTime beginning) {
         this.beginning = beginning;
@@ -42,16 +45,20 @@ public class Appointment {
         return end;
     }
 
+    public DateTime getRealEnd() {
+        return end.plus(getTravelduration());
+    }
+
     public void setEnd(DateTime end) {
         this.end = end;
     }
 
-    public Duration getTravelDuration() {
-        return travelDuration;
+    public Duration getTravelduration() {
+        return travelduration;
     }
 
-    public void setTravelDuration(Duration travelDuration) {
-        this.travelDuration = travelDuration;
+    public void setTravelduration(Duration travelDuration) {
+        this.travelduration = travelDuration;
     }
 
     @Override
