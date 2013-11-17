@@ -1,18 +1,20 @@
 package com.ninja_squad.craftsmanplan;
 
 import com.ninja_squad.craftsmanplan.domain.Appointment;
+import com.ninja_squad.craftsmanplan.service.ConstraintException;
+import com.ninja_squad.craftsmanplan.service.DistanceMaxScheduleConstraint;
+import com.ninja_squad.craftsmanplan.service.EarlyBeginingForbiddenScheduleConstraint;
+import com.ninja_squad.craftsmanplan.service.ScheduleService;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.joda.time.DateTime;
 import org.joda.time.Duration;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class ScheduleStepdefs {
     private ScheduleService scheduleService = new ScheduleService();
@@ -35,10 +37,39 @@ public class ScheduleStepdefs {
             proposedAppointments.add(app);
         }
     }
+
     @When("^I want to check my availability schedule to confirm the new proposal for appointment$")
     public void I_want_to_check_my_availability_schedule_and_print_it() throws Throwable {
         for (Appointment proposedAppointment : proposedAppointments) {
             scheduleService.addAppointment(proposedAppointment);
+        }
+        schedulePrinted = scheduleService.print();
+    }
+
+    @When("^I want to check my availability schedule to confirm the new proposal with a distance$")
+    public void I_want_to_check_my_availability_schedule_and_print_it_distance_max() throws Throwable {
+        scheduleService.addScheduleConstraint(new DistanceMaxScheduleConstraint());
+        for (Appointment proposedAppointment : proposedAppointments) {
+            try{
+                scheduleService.addAppointment(proposedAppointment);
+            }
+            catch (ConstraintException e){
+                e.getMessage() ;
+            }
+        }
+        schedulePrinted = scheduleService.print();
+    }
+
+    @When("^I want to check my availability schedule to confirm the new proposal with a limit about beginning time$")
+    public void I_want_to_check_my_availability_schedule_and_print_it_limit_beginning_time() throws Throwable {
+        scheduleService.addScheduleConstraint(new EarlyBeginingForbiddenScheduleConstraint());
+        for (Appointment proposedAppointment : proposedAppointments) {
+            try{
+                scheduleService.addAppointment(proposedAppointment);
+            }
+            catch (ConstraintException e){
+                e.getMessage() ;
+            }
         }
         schedulePrinted = scheduleService.print();
     }
@@ -55,9 +86,10 @@ public class ScheduleStepdefs {
 
 
     private Appointment createAppointment(AppointmentItem item) {
-        return new Appointment(item.getCity(),new Duration(item.getDuration()),item.getCustomer(),
-                item.getBeginning(),item.getEnd()) ;
+        return new Appointment(item.getCity(), new Duration(item.getTravelduration()), item.getCustomer(),
+                item.getBeginning(), item.getEnd(), item.getTravelkm());
     }
+
     // When converting tables to a List of objects it's usually better to
     // use classes that are only used in test (not in production). This
     // reduces coupling between scenarios and domain and gives you more control.
@@ -67,46 +99,39 @@ public class ScheduleStepdefs {
         private String beginning;
         private String end;
         private int travelduration;
+        private int travelkm;
 
 
         public String getCity() {
             return city;
         }
 
-        public void setCity(String city) {
-            this.city = city;
-        }
 
         public String getCustomer() {
             return customer;
         }
 
-        public void setCustomer(String customer) {
-            this.customer = customer;
-        }
 
         public String getBeginning() {
             return beginning;
         }
 
-        public void setBeginning(String beginning) {
-            this.beginning = beginning;
-        }
 
         public String getEnd() {
             return end;
         }
 
-        public void setEnd(String end) {
-            this.end = end;
-        }
 
-        public int getDuration() {
+
+        public int getTravelduration() {
             return travelduration;
         }
 
-        public void setDuration(int duration) {
-            this.travelduration = duration;
+
+        public int getTravelkm() {
+            return travelkm;
         }
+
+
     }
 }

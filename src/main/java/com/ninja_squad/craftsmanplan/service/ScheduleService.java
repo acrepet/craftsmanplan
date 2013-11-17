@@ -1,4 +1,4 @@
-package com.ninja_squad.craftsmanplan;
+package com.ninja_squad.craftsmanplan.service;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -8,11 +8,25 @@ import org.joda.time.DateTime;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * The service to manage the schedule for a craftsman
+ * User: agnes007
+ * Date: 11/10/13
+ */
 public class ScheduleService {
     // the list of Appointment ordered by date beginning
     private List<Appointment> schedule = new LinkedList<Appointment>();
 
-    public boolean addAppointment(Appointment newAppointment) {
+    // list of constraints
+    private List<ScheduleConstraint> scheduleConstraint = new ArrayList<ScheduleConstraint>();
+
+    public boolean addAppointment(Appointment newAppointment) throws ConstraintException {
+
+        //check the constraints
+        for (ScheduleConstraint constraint : scheduleConstraint) {
+            constraint.check(newAppointment, schedule);
+        }
+
         boolean insert = true;
         if (schedule.size() == 0) {
             schedule.add(newAppointment);
@@ -29,7 +43,6 @@ public class ScheduleService {
                 if (indexNewAppointment > 0) {
                     previous = schedule.get(indexNewAppointment - 1);
                 }
-
             }
 
             if (insert && previous != null) {
@@ -50,9 +63,6 @@ public class ScheduleService {
         return first.getRealEnd().isBefore(second.getRealBeginning());
     }
 
-    public int getNumberOfAppointments() {
-        return schedule.size();
-    }
 
     public StringBuilder print() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -69,5 +79,9 @@ public class ScheduleService {
                 return beginning.isBefore(input.getBeginning());
             }
         });
+    }
+
+    public void addScheduleConstraint(ScheduleConstraint newConstraint) {
+        scheduleConstraint.add(newConstraint);
     }
 }

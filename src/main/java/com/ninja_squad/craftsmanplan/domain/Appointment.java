@@ -15,16 +15,18 @@ public class Appointment {
     private DateTime beginning;
     private DateTime end;
     private Duration travelduration;
+    private int travelkm;
     private String city;
     private String customer;
     private final static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 
-    public Appointment(String city, Duration travelDuration, String customer, String beginning, String end) {
+    public Appointment(String city, Duration travelDuration, String customer, String beginning, String end, int travelkm) {
         this.city = city;
         this.travelduration = travelDuration;
         this.customer = customer;
         this.beginning = dateTimeFormatter.parseDateTime(beginning);
         this.end = dateTimeFormatter.parseDateTime(end);
+        this.travelkm = travelkm;
     }
 
 
@@ -35,34 +37,30 @@ public class Appointment {
         return beginning.minus(getTravelduration());
     }
 
-    public void setBeginning(DateTime beginning) {
-        this.beginning = beginning;
-    }
-
-
-    public DateTime getEnd() {
-        return end;
-    }
 
     public DateTime getRealEnd() {
         return end.plus(getTravelduration());
+    }
+
+
+    public Duration getTravelduration() {
+        return travelduration;
+    }
+
+    public DateTime getEnd() {
+        return end;
     }
 
     public void setEnd(DateTime end) {
         this.end = end;
     }
 
-    public Duration getTravelduration() {
-        return travelduration;
+    public int getTravelkm() {
+        return travelkm;
     }
 
-    public void setTravelduration(Duration travelDuration) {
-        this.travelduration = travelDuration;
-    }
-
-    @Override
-    public String toString() {
-        return customer + " " + city + " " + beginning.toString(dateTimeFormatter);
+    public void setTravelkm(int travelkm) {
+        this.travelkm = travelkm;
     }
 
     public String getCity() {
@@ -80,4 +78,10 @@ public class Appointment {
     public void setCustomer(String customer) {
         this.customer = customer;
     }
+
+    @Override
+    public String toString() {
+        return customer + " " + city + " " + beginning.toString(dateTimeFormatter);
+    }
+
 }

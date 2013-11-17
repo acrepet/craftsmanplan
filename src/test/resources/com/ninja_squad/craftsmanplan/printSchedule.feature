@@ -7,10 +7,10 @@ Feature: Print a Schedule
   The list should be printed in chronological order by item beginning
 
     Given an appointments list:
-      | city          | customer       |    beginning                             | travelduration |       end                             |
-      | Montagny      | albert         |    28/10/2013 10:00:00                   |    1000        |   28/10/2013 10:30:00                 |
-      | Craponne      | lacote         |    28/10/2013 08:00:00                   |    2000        |   28/10/2013 08:30:00                 |
-      | St-Etienne    | besson         |    28/10/2013 14:00:00                   |    1000        |   28/10/2013 14:30:00                 |
+      | city          | customer       |    beginning           | travelduration |       end             |    travelkm     |
+      | Montagny      | albert         |    28/10/2013 10:00:00 |    1000        |   28/10/2013 10:30:00 |     12          |
+      | Craponne      | lacote         |    28/10/2013 08:00:00 |    2000        |   28/10/2013 08:30:00 |     14          |
+      | St-Etienne    | besson         |    28/10/2013 14:00:00 |    1000        |   28/10/2013 14:30:00 |     20          |
     When I print that list
     Then it should look like:
       """
