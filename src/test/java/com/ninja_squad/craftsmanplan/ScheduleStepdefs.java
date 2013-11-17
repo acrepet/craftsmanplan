@@ -6,6 +6,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +19,19 @@ public class ScheduleStepdefs {
     private StringBuilder schedulePrinted = new StringBuilder();
     private List<Appointment> proposedAppointments = new ArrayList<Appointment>();
 
+
     @Given("^an appointments list:$")
     public void an_appointments_list(List<AppointmentItem> items) throws Throwable {
         for (AppointmentItem item : items) {
-            Appointment app = new Appointment(item.getCity(),new Duration(item.getDuration()),item.getCustomer(), new DateTime(item.getBeginning()), new DateTime(item.getEnd()));
+            Appointment app = createAppointment(item);
             scheduleService.addAppointment(app);
         }
     }
+
     @Given(value = "^a new proposal for appointment:$")
     public void a_new_proposal_for_appointment(List<AppointmentItem> items) throws Throwable {
         for (AppointmentItem item : items) {
-            Appointment app = new Appointment(item.getCity(),new Duration(item.getDuration()),item.getCustomer(), new DateTime(item.getBeginning()), new DateTime(item.getEnd()));
+            Appointment app = createAppointment(item);
             proposedAppointments.add(app);
         }
     }
@@ -50,6 +54,10 @@ public class ScheduleStepdefs {
     }
 
 
+    private Appointment createAppointment(AppointmentItem item) {
+        return new Appointment(item.getCity(),new Duration(item.getDuration()),item.getCustomer(),
+                item.getBeginning(),item.getEnd()) ;
+    }
     // When converting tables to a List of objects it's usually better to
     // use classes that are only used in test (not in production). This
     // reduces coupling between scenarios and domain and gives you more control.

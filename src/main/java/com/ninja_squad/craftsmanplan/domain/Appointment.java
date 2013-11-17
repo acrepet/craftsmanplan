@@ -2,6 +2,8 @@ package com.ninja_squad.craftsmanplan.domain;
 
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 
 /**
@@ -15,20 +17,16 @@ public class Appointment {
     private Duration travelduration;
     private String city;
     private String customer;
+    private final static DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss");
 
-    public Appointment(String city, Duration travelDuration, String customer, DateTime beginning, DateTime end) {
+    public Appointment(String city, Duration travelDuration, String customer, String beginning, String end) {
         this.city = city;
         this.travelduration = travelDuration;
         this.customer = customer;
-        this.beginning = beginning;
-        this.end = end;
+        this.beginning = dateTimeFormatter.parseDateTime(beginning);
+        this.end = dateTimeFormatter.parseDateTime(end);
     }
 
-    public Appointment(String city, String customer, DateTime beginning) {
-        this.city = city;
-        this.customer = customer;
-        this.beginning = beginning;
-    }
 
     public DateTime getBeginning() {
         return beginning;
@@ -40,6 +38,7 @@ public class Appointment {
     public void setBeginning(DateTime beginning) {
         this.beginning = beginning;
     }
+
 
     public DateTime getEnd() {
         return end;
@@ -63,7 +62,7 @@ public class Appointment {
 
     @Override
     public String toString() {
-        return customer + " " + city + " " + beginning;
+        return customer + " " + city + " " + beginning.toString(dateTimeFormatter);
     }
 
     public String getCity() {

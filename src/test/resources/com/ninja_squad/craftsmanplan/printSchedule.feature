@@ -7,15 +7,15 @@ Feature: Print a Schedule
   The list should be printed in chronological order by item beginning
 
     Given an appointments list:
-      | city          | customer       |    beginning                         | travelduration |       end                             |
-      | Montagny      | albert         |    2013-10-28T10:00:00.000+01:00     |    60          |   2013-10-28T10:30:00.000+01:00       |
-      | Craponne      | lacote         |    2013-10-28T08:00:00.000+01:00     |    60          |   2013-10-28T08:30:00.000+01:00       |
-      | St-Etienne    | besson         |    2013-10-28T14:00:00.000+01:00     |    60          |   2013-10-28T14:30:00.000+01:00       |
+      | city          | customer       |    beginning                             | travelduration |       end                             |
+      | Montagny      | albert         |    28/10/2013 10:00:00                   |    1000        |   28/10/2013 10:30:00                 |
+      | Craponne      | lacote         |    28/10/2013 08:00:00                   |    2000        |   28/10/2013 08:30:00                 |
+      | St-Etienne    | besson         |    28/10/2013 14:00:00                   |    1000        |   28/10/2013 14:30:00                 |
     When I print that list
     Then it should look like:
       """
-      lacote Craponne 2013-10-28T08:00:00.000+01:00
-      albert Montagny 2013-10-28T10:00:00.000+01:00
-      besson St-Etienne 2013-10-28T14:00:00.000+01:00
+      lacote Craponne 28/10/2013 08:00:00
+      albert Montagny 28/10/2013 10:00:00
+      besson St-Etienne 28/10/2013 14:00:00
 
       """
