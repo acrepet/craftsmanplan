@@ -36,7 +36,7 @@ Feature: Schedule a new appointment
     leroux Ecully 2013-10-28T15:00:00.000+01:00
 
     """
-  Scenario: Fix a possible appointment with only one existing appointment
+  Scenario: Fix a possible appointment AFTER a single existing appointment
 
     Given an appointments list:
       | city          | customer       |    beginning                             | travelduration |       end                             |
@@ -51,6 +51,22 @@ Feature: Schedule a new appointment
     leroux Ecully 2013-10-28T15:00:00.000+01:00
 
     """
+  Scenario: Fix a possible appointment BEFORE a single existing appointment
+
+    Given an appointments list:
+      | city          | customer       |    beginning                             | travelduration |       end                             |
+      | Montagny      | albert         |    2013-10-28T15:00:00.000+01:00         |    1000          |   2013-10-28T15:30:00.000+01:00       |
+    And a new proposal for appointment:
+      | city          | customer       |    beginning                             | travelduration |       end                             |
+      | Ecully        | leroux         |    2013-10-28T10:00:00.000+01:00         |    1000          |   2013-10-28T10:30:00.000+01:00       |
+    When I want to check my availability schedule to confirm the new proposal for appointment
+    Then it should look like:
+    """
+    leroux Ecully 2013-10-28T10:00:00.000+01:00
+    albert Montagny 2013-10-28T15:00:00.000+01:00
+
+    """
+
   Scenario: Fix a possible appointment with a conflict with an existing appointment
 
     Given an appointments list:
